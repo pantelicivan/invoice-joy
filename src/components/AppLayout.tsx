@@ -3,6 +3,7 @@ import { FileText, Settings, Plus, LogOut, LayoutDashboard } from "lucide-react"
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import jakiLogo from "@/assets/jaki-logo.jpg";
 
 const navItems = [
   { to: "/", label: "Fakture", icon: LayoutDashboard },
@@ -21,10 +22,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-1">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
-                <FileText className="w-4 h-4 text-primary-foreground" />
-              </div>
-              <span className="font-semibold text-lg hidden sm:block">FakturaApp</span>
+              <img src={jakiLogo} alt="Jaki Reifenservice" className="h-10 mr-3 rounded" />
+              <span className="font-semibold text-lg hidden sm:block">Jaki Reifenservice</span>
               <div className="flex items-center gap-1 ml-4 sm:ml-8">
                 {navItems.map((item) => (
                   <Link key={item.to} to={item.to}>
