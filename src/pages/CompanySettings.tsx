@@ -17,8 +17,8 @@ const CompanySettings = () => {
     address: "",
     phone: "",
     email: "",
-    pib: "",
-    maticni_broj: "",
+    bank: "",
+    iban: "",
   });
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const CompanySettings = () => {
           address: data.address || "",
           phone: data.phone || "",
           email: data.email || "",
-          pib: data.pib || "",
-          maticni_broj: data.maticni_broj || "",
+          bank: data.bank || "",
+          iban: data.iban || "",
         });
       }
       setLoading(false);
@@ -57,43 +57,75 @@ const CompanySettings = () => {
     setSaving(false);
   };
 
-  if (loading) return <div className="p-8 text-center text-muted-foreground">Laden...</div>;
+  if (loading)
+    return (
+      <div className="p-8 text-center text-muted-foreground">Laden...</div>
+    );
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Firmeneinstellungen</h1>
-        <p className="text-muted-foreground text-sm mt-1">Diese Daten werden auf den Rechnungen angezeigt</p>
+        <p className="text-muted-foreground text-sm mt-1">
+          Diese Daten werden auf den Rechnungen angezeigt
+        </p>
       </div>
 
       <Card className="invoice-shadow max-w-2xl">
         <CardContent className="p-6 space-y-4">
           <div className="space-y-2">
             <Label>Firmenname</Label>
-            <Input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} placeholder="Ihre Firma GmbH" />
+            <Input
+              value={form.company_name}
+              onChange={(e) =>
+                setForm({ ...form, company_name: e.target.value })
+              }
+              placeholder="Ihre Firma GmbH"
+            />
           </div>
           <div className="space-y-2">
             <Label>Adresse</Label>
-            <Input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Straße Nr., Stadt" />
+            <Input
+              value={form.address}
+              onChange={(e) => setForm({ ...form, address: e.target.value })}
+              placeholder="Straße Nr., Stadt"
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Telefon</Label>
-              <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+49..." />
+              <Input
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                placeholder="+49..."
+              />
             </div>
             <div className="space-y-2">
               <Label>E-Mail</Label>
-              <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="firma@email.com" />
+              <Input
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="firma@email.com"
+              />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>USt-IdNr.</Label>
-              <Input value={form.pib} onChange={(e) => setForm({ ...form, pib: e.target.value })} placeholder="DE123456789" />
+              <Label>Bank</Label>
+              <Input
+                value={form.bank}
+                onChange={(e) => setForm({ ...form, bank: e.target.value })}
+                placeholder=""
+              />
             </div>
             <div className="space-y-2">
-              <Label>Handelsregister (HRB)</Label>
-              <Input value={form.maticni_broj} onChange={(e) => setForm({ ...form, maticni_broj: e.target.value })} placeholder="HRB 12345" />
+              <Label>IBAN</Label>
+              <Input
+                value={form.iban}
+                onChange={(e) => setForm({ ...form, iban: e.target.value })}
+                placeholder=""
+              />
             </div>
           </div>
           <Button onClick={handleSave} disabled={saving} className="gap-2">

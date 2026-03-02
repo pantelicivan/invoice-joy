@@ -6,8 +6,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 
@@ -25,7 +38,12 @@ const Services = () => {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
-  const [form, setForm] = useState({ name: "", price: "", unit: "Stk", description: "" });
+  const [form, setForm] = useState({
+    name: "",
+    price: "",
+    unit: "Stk",
+    description: "",
+  });
 
   const fetchServices = async () => {
     const { data, error } = await supabase
@@ -113,9 +131,16 @@ const Services = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Leistungen</h1>
-          <p className="text-muted-foreground text-sm mt-1">Verwalten Sie Ihre Leistungen und Preise</p>
+          <p className="text-muted-foreground text-sm mt-1">
+            Verwalten Sie Ihre Leistungen und Preise
+          </p>
         </div>
-        <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
+        <Dialog
+          open={dialogOpen}
+          onOpenChange={(open) => {
+            setDialogOpen(open);
+            if (!open) resetForm();
+          }}>
           <DialogTrigger asChild>
             <Button className="gap-2">
               <Plus className="w-4 h-4" /> Leistung hinzufügen
@@ -123,29 +148,56 @@ const Services = () => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{editingService ? "Leistung bearbeiten" : "Neue Leistung"}</DialogTitle>
+              <DialogTitle>
+                {editingService ? "Leistung bearbeiten" : "Neue Leistung"}
+              </DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label>Name</Label>
-                <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Name der Leistung" />
+                <Input
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="Name der Leistung"
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Preis</Label>
-                  <Input type="number" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} placeholder="0.00" />
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={form.price}
+                    onChange={(e) =>
+                      setForm({ ...form, price: e.target.value })
+                    }
+                    placeholder="0.00"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>Einheit</Label>
-                  <Input value={form.unit} onChange={(e) => setForm({ ...form, unit: e.target.value })} placeholder="Stk" />
+                  <Input
+                    value={form.unit}
+                    onChange={(e) => setForm({ ...form, unit: e.target.value })}
+                    placeholder="Stk"
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label>Beschreibung</Label>
-                <Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Beschreibung (optional)" rows={3} />
+                <Textarea
+                  value={form.description}
+                  onChange={(e) =>
+                    setForm({ ...form, description: e.target.value })
+                  }
+                  placeholder="Beschreibung (optional)"
+                  rows={3}
+                />
               </div>
               <Button onClick={handleSave} className="w-full">
-                {editingService ? "Änderungen speichern" : "Leistung hinzufügen"}
+                {editingService
+                  ? "Änderungen speichern"
+                  : "Leistung hinzufügen"}
               </Button>
             </div>
           </DialogContent>
@@ -155,10 +207,13 @@ const Services = () => {
       <Card className="invoice-shadow">
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-8 text-center text-muted-foreground">Laden...</div>
+            <div className="p-8 text-center text-muted-foreground">
+              Laden...
+            </div>
           ) : services.length === 0 ? (
             <div className="p-8 text-center text-muted-foreground">
-              Keine Leistungen vorhanden. Klicken Sie auf "Leistung hinzufügen" um zu beginnen.
+              Keine Leistungen vorhanden. Klicken Sie auf "Leistung hinzufügen"
+              um zu beginnen.
             </div>
           ) : (
             <Table>
@@ -174,16 +229,27 @@ const Services = () => {
               <TableBody>
                 {services.map((service) => (
                   <TableRow key={service.id}>
-                    <TableCell className="font-medium">{service.name}</TableCell>
+                    <TableCell className="font-medium">
+                      {service.name}
+                    </TableCell>
                     <TableCell>{service.price.toFixed(2)} €</TableCell>
                     <TableCell>{service.unit}</TableCell>
-                    <TableCell className="text-muted-foreground max-w-[200px] truncate">{service.description}</TableCell>
+                    <TableCell className="text-muted-foreground max-w-[200px] truncate">
+                      {service.description}
+                    </TableCell>
                     <TableCell>
                       <div className="flex gap-1">
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(service)}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleEdit(service)}>
                           <Pencil className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDelete(service.id)} className="text-destructive">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDelete(service.id)}
+                          className="text-destructive">
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>

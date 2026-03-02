@@ -7,15 +7,20 @@ Deno.serve(async (req) => {
 
   // Create test user
   const { data, error } = await supabase.auth.admin.createUser({
-    email: "jaki@jaki.com",
+    email: "jaki",
     password: "JakiVrelo",
     email_confirm: true,
     user_metadata: { username: "jaki" },
   });
 
   if (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 400 });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 400,
+    });
   }
 
-  return new Response(JSON.stringify({ success: true, user_id: data.user.id }), { status: 200 });
+  return new Response(
+    JSON.stringify({ success: true, user_id: data.user.id }),
+    { status: 200 },
+  );
 });

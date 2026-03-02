@@ -6,7 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { toast } from "sonner";
 import { Save, Printer, Plus, Trash2, Search } from "lucide-react";
 import { format } from "date-fns";
@@ -34,8 +41,8 @@ interface CompanyProfile {
   address: string;
   phone: string;
   email: string;
-  pib: string;
-  maticni_broj: string;
+  bank: string;
+  iban: string;
 }
 
 const NewInvoice = () => {
@@ -46,8 +53,11 @@ const NewInvoice = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [items, setItems] = useState<InvoiceItem[]>([]);
   const [customerName, setCustomerName] = useState("");
+  const [customerAddress, setCustomerAddress] = useState("");
   const [carRegistration, setCarRegistration] = useState("");
-  const [invoiceDate, setInvoiceDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [invoiceDate, setInvoiceDate] = useState(
+    format(new Date(), "yyyy-MM-dd"),
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -55,7 +65,11 @@ const NewInvoice = () => {
   useEffect(() => {
     const fetchData = async () => {
       const [companyRes, servicesRes] = await Promise.all([
-        supabase.from("company_profiles").select("*").eq("user_id", user!.id).single(),
+        supabase
+          .from("company_profiles")
+          .select("*")
+          .eq("user_id", user!.id)
+          .single(),
         supabase.from("services").select("*").order("name"),
       ]);
       if (companyRes.data) setCompany(companyRes.data);
@@ -65,7 +79,7 @@ const NewInvoice = () => {
   }, [user]);
 
   const filteredServices = services.filter((s) =>
-    s.name.toLowerCase().includes(searchQuery.toLowerCase())
+    s.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const addItem = (service: Service) => {
@@ -89,7 +103,11 @@ const NewInvoice = () => {
     setShowSearch(false);
   };
 
-  const updateItem = (index: number, field: "quantity" | "price", value: number) => {
+  const updateItem = (
+    index: number,
+    field: "quantity" | "price",
+    value: number,
+  ) => {
     const updated = [...items];
     updated[index][field] = value;
     updated[index].total = updated[index].quantity * updated[index].price;
@@ -107,6 +125,11 @@ const NewInvoice = () => {
       toast.error("Bitte Kundenname eingeben");
       return;
     }
+
+    if (!customerAddress.trim()) {
+      toast.error("Bitte Kundenname addresse");
+      return;
+    }
     if (items.length === 0) {
       toast.error("Bitte mindestens eine Leistung hinzufügen");
       return;
@@ -119,7 +142,8 @@ const NewInvoice = () => {
         .select("*", { count: "exact", head: true })
         .eq("user_id", user!.id);
 
-      const invoiceNumber = `RE-${String((count || 0) + 1).padStart(4, "0")}`;
+      const year = new Date().getFullYear();
+      const invoiceNumber = `${year}/${String((count || 0) + 1).padStart(4, "0")}`;
 
       const { data: invoice, error: invoiceError } = await supabase
         .from("invoices")
@@ -127,6 +151,7 @@ const NewInvoice = () => {
           user_id: user!.id,
           invoice_number: invoiceNumber,
           customer_name: customerName.trim(),
+          customer_address: customerAddress.trim(),
           car_registration: carRegistration.trim(),
           invoice_date: invoiceDate,
           total: grandTotal,
@@ -146,7 +171,9 @@ const NewInvoice = () => {
         total: item.total,
       }));
 
-      const { error: itemsError } = await supabase.from("invoice_items").insert(invoiceItems);
+      const { error: itemsError } = await supabase
+        .from("invoice_items")
+        .insert(invoiceItems);
       if (itemsError) throw itemsError;
 
       toast.success(`Rechnung ${invoiceNumber} gespeichert`);
@@ -167,7 +194,9 @@ const NewInvoice = () => {
       <div className="flex items-center justify-between no-print">
         <div>
           <h1 className="text-2xl font-semibold">Neue Rechnung</h1>
-          <p className="text-muted-foreground text-sm mt-1">Erstellen Sie eine neue Rechnung</p>
+          <p className="text-muted-foreground text-sm mt-1">
+            Erstellen Sie eine neue Rechnung
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={handlePrint} className="gap-2">
@@ -185,19 +214,47 @@ const NewInvoice = () => {
           <CardContent className="p-6">
             <div className="flex justify-between items-start">
               <div className="flex items-start gap-4">
-                <img src={jakiLogo} alt="Jaki Reifenservice" className="h-16 rounded" />
+                <img
+                  src={jakiLogo}
+                  alt="Jaki Reifenservice"
+                  className="h-16 rounded"
+                />
                 <div>
-                  <h2 className="text-xl font-semibold">{company?.company_name || "Jaki Reifenservice"}</h2>
-                  {company?.address && <p className="text-muted-foreground text-sm mt-1">{company.address}</p>}
-                  {company?.phone && <p className="text-muted-foreground text-sm">{company.phone}</p>}
-                  {company?.email && <p className="text-muted-foreground text-sm">{company.email}</p>}
-                  {company?.pib && <p className="text-muted-foreground text-sm">USt-IdNr.: {company.pib}</p>}
-                  {company?.maticni_broj && <p className="text-muted-foreground text-sm">HRB: {company.maticni_broj}</p>}
+                  <h2 className="text-xl font-semibold">
+                    {company?.company_name || "Jaki Reifenservice"}
+                  </h2>
+                  {company?.address && (
+                    <p className="text-muted-foreground text-sm mt-1">
+                      {company.address}
+                    </p>
+                  )}
+                  {company?.phone && (
+                    <p className="text-muted-foreground text-sm">
+                      {company.phone}
+                    </p>
+                  )}
+                  {company?.email && (
+                    <p className="text-muted-foreground text-sm">
+                      {company.email}
+                    </p>
+                  )}
+                  {company?.bank && (
+                    <p className="text-muted-foreground text-sm">
+                      Bank: {company.bank}
+                    </p>
+                  )}
+                  {company?.iban && (
+                    <p className="text-muted-foreground text-sm">
+                      IBAN: {company.iban}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="text-right">
                 <h3 className="text-lg font-semibold text-primary">RECHNUNG</h3>
-                <p className="text-muted-foreground text-sm mt-1">Datum: {invoiceDate}</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Datum: {invoiceDate}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -206,19 +263,41 @@ const NewInvoice = () => {
         {/* Customer Info */}
         <Card className="invoice-shadow mt-4">
           <CardContent className="p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-3">KUNDENDATEN</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">
+              KUNDENDATEN
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label>Kundenname</Label>
-                <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Name / Firma" />
+                <Input
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  placeholder="Name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Addresse</Label>
+                <Input
+                  value={customerAddress}
+                  onChange={(e) => setCustomerAddress(e.target.value)}
+                  placeholder="Addresse"
+                />
               </div>
               <div className="space-y-2">
                 <Label>Kennzeichen</Label>
-                <Input value={carRegistration} onChange={(e) => setCarRegistration(e.target.value)} placeholder="M-AB 1234" />
+                <Input
+                  value={carRegistration}
+                  onChange={(e) => setCarRegistration(e.target.value)}
+                  placeholder="M-AB 1234"
+                />
               </div>
               <div className="space-y-2">
                 <Label>Rechnungsdatum</Label>
-                <Input type="date" value={invoiceDate} onChange={(e) => setInvoiceDate(e.target.value)} />
+                <Input
+                  type="date"
+                  value={invoiceDate}
+                  onChange={(e) => setInvoiceDate(e.target.value)}
+                />
               </div>
             </div>
           </CardContent>
@@ -227,7 +306,9 @@ const NewInvoice = () => {
         {/* Service Search */}
         <Card className="invoice-shadow mt-4 no-print">
           <CardContent className="p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-3">LEISTUNG HINZUFÜGEN</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">
+              LEISTUNG HINZUFÜGEN
+            </h3>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
@@ -243,20 +324,25 @@ const NewInvoice = () => {
               {showSearch && searchQuery && (
                 <div className="absolute z-10 w-full mt-1 bg-card border rounded-lg shadow-lg max-h-60 overflow-y-auto">
                   {filteredServices.length === 0 ? (
-                    <div className="p-3 text-sm text-muted-foreground">Keine Ergebnisse</div>
+                    <div className="p-3 text-sm text-muted-foreground">
+                      Keine Ergebnisse
+                    </div>
                   ) : (
                     filteredServices.map((service) => (
                       <button
                         key={service.id}
                         className="w-full text-left px-4 py-3 hover:bg-secondary transition-colors flex items-center justify-between border-b last:border-b-0"
-                        onClick={() => addItem(service)}
-                      >
+                        onClick={() => addItem(service)}>
                         <div>
                           <span className="font-medium">{service.name}</span>
-                          <span className="text-muted-foreground text-sm ml-2">({service.unit})</span>
+                          <span className="text-muted-foreground text-sm ml-2">
+                            ({service.unit})
+                          </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-mono">{service.price.toFixed(2)} €</span>
+                          <span className="text-sm font-mono">
+                            {service.price.toFixed(2)} €
+                          </span>
                           <Plus className="w-4 h-4 text-primary" />
                         </div>
                       </button>
@@ -297,7 +383,13 @@ const NewInvoice = () => {
                           min="0.01"
                           step="0.01"
                           value={item.quantity}
-                          onChange={(e) => updateItem(index, "quantity", parseFloat(e.target.value) || 0)}
+                          onChange={(e) =>
+                            updateItem(
+                              index,
+                              "quantity",
+                              parseFloat(e.target.value) || 0,
+                            )
+                          }
                           className="w-24"
                         />
                       </TableCell>
@@ -307,7 +399,13 @@ const NewInvoice = () => {
                           min="0"
                           step="0.01"
                           value={item.price}
-                          onChange={(e) => updateItem(index, "price", parseFloat(e.target.value) || 0)}
+                          onChange={(e) =>
+                            updateItem(
+                              index,
+                              "price",
+                              parseFloat(e.target.value) || 0,
+                            )
+                          }
                           className="w-32"
                         />
                       </TableCell>
@@ -316,7 +414,11 @@ const NewInvoice = () => {
                         {item.total.toFixed(2)} €
                       </TableCell>
                       <TableCell className="no-print">
-                        <Button variant="ghost" size="icon" onClick={() => removeItem(index)} className="text-destructive">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removeItem(index)}
+                          className="text-destructive">
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </TableCell>
@@ -328,8 +430,12 @@ const NewInvoice = () => {
             {items.length > 0 && (
               <div className="border-t p-4 flex justify-end">
                 <div className="text-right">
-                  <span className="text-muted-foreground text-sm mr-4">GESAMT:</span>
-                  <span className="text-xl font-semibold font-mono">{grandTotal.toFixed(2)} €</span>
+                  <span className="text-muted-foreground text-sm mr-4">
+                    GESAMT:
+                  </span>
+                  <span className="text-xl font-semibold font-mono">
+                    {grandTotal.toFixed(2)} €
+                  </span>
                 </div>
               </div>
             )}

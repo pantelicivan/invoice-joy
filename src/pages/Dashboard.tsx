@@ -4,7 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Plus, FileText, Eye } from "lucide-react";
 import { format } from "date-fns";
 
@@ -12,6 +19,7 @@ interface Invoice {
   id: string;
   invoice_number: string;
   customer_name: string;
+  customer_address: string;
   car_registration: string;
   invoice_date: string;
   total: number;
@@ -40,7 +48,9 @@ const Dashboard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Rechnungen</h1>
-          <p className="text-muted-foreground text-sm mt-1">Übersicht aller erstellten Rechnungen</p>
+          <p className="text-muted-foreground text-sm mt-1">
+            Übersicht aller erstellten Rechnungen
+          </p>
         </div>
         <Link to="/nova-faktura">
           <Button className="gap-2">
@@ -68,11 +78,16 @@ const Dashboard = () => {
           <CardContent className="p-5">
             <p className="text-sm text-muted-foreground">Diesen Monat</p>
             <p className="text-2xl font-semibold mt-1">
-              {invoices.filter((i) => {
-                const d = new Date(i.invoice_date);
-                const now = new Date();
-                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-              }).length}
+              {
+                invoices.filter((i) => {
+                  const d = new Date(i.invoice_date);
+                  const now = new Date();
+                  return (
+                    d.getMonth() === now.getMonth() &&
+                    d.getFullYear() === now.getFullYear()
+                  );
+                }).length
+              }
             </p>
           </CardContent>
         </Card>
@@ -81,11 +96,15 @@ const Dashboard = () => {
       <Card className="invoice-shadow">
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-8 text-center text-muted-foreground">Laden...</div>
+            <div className="p-8 text-center text-muted-foreground">
+              Laden...
+            </div>
           ) : invoices.length === 0 ? (
             <div className="p-8 text-center">
               <FileText className="w-12 h-12 mx-auto text-muted-foreground/40 mb-3" />
-              <p className="text-muted-foreground">Keine Rechnungen vorhanden</p>
+              <p className="text-muted-foreground">
+                Keine Rechnungen vorhanden
+              </p>
               <Link to="/nova-faktura">
                 <Button variant="outline" className="mt-3 gap-2">
                   <Plus className="w-4 h-4" /> Erste Rechnung erstellen
@@ -98,7 +117,7 @@ const Dashboard = () => {
                 <TableRow>
                   <TableHead>Nr.</TableHead>
                   <TableHead>Kunde</TableHead>
-                  <TableHead>Kennzeichen</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>Datum</TableHead>
                   <TableHead className="text-right">Gesamt</TableHead>
                   <TableHead className="w-16"></TableHead>
@@ -107,11 +126,19 @@ const Dashboard = () => {
               <TableBody>
                 {invoices.map((invoice) => (
                   <TableRow key={invoice.id}>
-                    <TableCell className="font-medium font-mono">{invoice.invoice_number}</TableCell>
+                    <TableCell className="font-medium font-mono">
+                      {invoice.invoice_number}
+                    </TableCell>
                     <TableCell>{invoice.customer_name}</TableCell>
-                    <TableCell className="font-mono text-sm">{invoice.car_registration}</TableCell>
-                    <TableCell>{format(new Date(invoice.invoice_date), "dd.MM.yyyy")}</TableCell>
-                    <TableCell className="text-right font-mono font-medium">{Number(invoice.total).toFixed(2)} €</TableCell>
+                    <TableCell className="font-mono text-sm">
+                      {invoice.car_registration}
+                    </TableCell>
+                    <TableCell>
+                      {format(new Date(invoice.invoice_date), "dd.MM.yyyy")}
+                    </TableCell>
+                    <TableCell className="text-right font-mono font-medium">
+                      {Number(invoice.total).toFixed(2)} €
+                    </TableCell>
                     <TableCell>
                       <Link to={`/faktura/${invoice.id}`}>
                         <Button variant="ghost" size="icon">
