@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Printer } from "lucide-react";
 import { format } from "date-fns";
+import jakiLogo from "@/assets/jaki-logo.jpg";
 
 const InvoiceView = () => {
   const { id } = useParams();
@@ -46,13 +47,16 @@ const InvoiceView = () => {
       <Card className="invoice-shadow">
         <CardContent className="p-8">
           <div className="flex justify-between items-start mb-8">
-            <div>
-              <h2 className="text-xl font-semibold">{company?.company_name || "Firma"}</h2>
-              {company?.address && <p className="text-muted-foreground text-sm mt-1">{company.address}</p>}
-              {company?.phone && <p className="text-muted-foreground text-sm">{company.phone}</p>}
-              {company?.email && <p className="text-muted-foreground text-sm">{company.email}</p>}
-              {company?.pib && <p className="text-muted-foreground text-sm">PIB: {company.pib}</p>}
-              {company?.maticni_broj && <p className="text-muted-foreground text-sm">MB: {company.maticni_broj}</p>}
+            <div className="flex items-start gap-4">
+              <img src={jakiLogo} alt="Jaki Reifenservice" className="h-16 rounded" />
+              <div>
+                <h2 className="text-xl font-semibold">{company?.company_name || "Jaki Reifenservice"}</h2>
+                {company?.address && <p className="text-muted-foreground text-sm mt-1">{company.address}</p>}
+                {company?.phone && <p className="text-muted-foreground text-sm">{company.phone}</p>}
+                {company?.email && <p className="text-muted-foreground text-sm">{company.email}</p>}
+                {company?.pib && <p className="text-muted-foreground text-sm">PIB: {company.pib}</p>}
+                {company?.maticni_broj && <p className="text-muted-foreground text-sm">MB: {company.maticni_broj}</p>}
+              </div>
             </div>
             <div className="text-right">
               <h3 className="text-lg font-semibold text-primary">FAKTURA</h3>
