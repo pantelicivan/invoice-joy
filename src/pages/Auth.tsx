@@ -3,7 +3,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { toast } from "sonner";
 import jakiLogo from "@/assets/jaki-logo.jpg";
 
@@ -16,7 +22,10 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
       if (error) throw error;
       toast.success("Erfolgreich angemeldet!");
     } catch (error: any) {
@@ -30,7 +39,11 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md invoice-shadow-lg">
         <CardHeader className="text-center space-y-3">
-          <img src={jakiLogo} alt="Jaki Reifenservice" className="mx-auto h-16 rounded-xl" />
+          <img
+            src={jakiLogo}
+            alt="Jaki Reifenservice"
+            className="mx-auto h-16 rounded-xl"
+          />
           <CardTitle className="text-2xl">Jaki Reifenservice</CardTitle>
           <CardDescription>Melden Sie sich bei Ihrem Konto an</CardDescription>
         </CardHeader>
