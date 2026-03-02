@@ -1,5 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { FileText, Settings, Plus, LogOut, LayoutDashboard } from "lucide-react";
+import {
+  FileText,
+  Settings,
+  Plus,
+  LogOut,
+  LayoutDashboard,
+} from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -7,9 +13,9 @@ import jakiLogo from "@/assets/jaki-logo.jpg";
 
 const navItems = [
   { to: "/", label: "Rechnungen", icon: LayoutDashboard },
-  { to: "/nova-faktura", label: "Neue Rechnung", icon: Plus },
-  { to: "/usluge", label: "Leistungen", icon: FileText },
-  { to: "/podesavanja", label: "Einstellungen", icon: Settings },
+  { to: "/new-invoice", label: "Neue Rechnung", icon: Plus },
+  { to: "/services", label: "Leistungen", icon: FileText },
+  { to: "/settings", label: "Einstellungen", icon: Settings },
 ];
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -22,8 +28,14 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-1">
-              <img src={jakiLogo} alt="Jaki Reifenservice" className="h-10 mr-3 rounded" />
-              <span className="font-semibold text-lg hidden sm:block">Jaki Reifenservice</span>
+              <img
+                src={jakiLogo}
+                alt="Jaki Reifenservice"
+                className="h-10 mr-3 rounded"
+              />
+              <span className="font-semibold text-lg hidden sm:block">
+                Jaki Reifenservice
+              </span>
               <div className="flex items-center gap-1 ml-4 sm:ml-8">
                 {navItems.map((item) => (
                   <Link key={item.to} to={item.to}>
@@ -32,9 +44,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                       size="sm"
                       className={cn(
                         "gap-2 text-muted-foreground",
-                        location.pathname === item.to && "bg-secondary text-foreground"
-                      )}
-                    >
+                        location.pathname === item.to &&
+                          "bg-secondary text-foreground",
+                      )}>
                       <item.icon className="w-4 h-4" />
                       <span className="hidden md:inline">{item.label}</span>
                     </Button>
@@ -42,16 +54,18 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                 ))}
               </div>
             </div>
-            <Button variant="ghost" size="sm" onClick={signOut} className="gap-2 text-muted-foreground">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={signOut}
+              className="gap-2 text-muted-foreground">
               <LogOut className="w-4 h-4" />
               <span className="hidden sm:inline">Abmelden</span>
             </Button>
           </div>
         </div>
       </nav>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        {children}
-      </main>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">{children}</main>
     </div>
   );
 };

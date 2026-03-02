@@ -32,10 +32,10 @@ const ProtectedRoutes = () => {
     <AppLayout>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/usluge" element={<Services />} />
-        <Route path="/nova-faktura" element={<NewInvoice />} />
-        <Route path="/faktura/:id" element={<InvoiceView />} />
-        <Route path="/podesavanja" element={<CompanySettings />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/new-invoice" element={<NewInvoice />} />
+        <Route path="/invoice/:id" element={<InvoiceView />} />
+        <Route path="/settings" element={<CompanySettings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AppLayout>

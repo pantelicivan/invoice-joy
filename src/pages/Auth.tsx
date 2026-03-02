@@ -14,8 +14,8 @@ import { toast } from "sonner";
 import jakiLogo from "@/assets/jaki-logo.jpg";
 
 const Auth = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("jaki@mail.com");
+  const [password, setPassword] = useState("JakiVrelo");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {

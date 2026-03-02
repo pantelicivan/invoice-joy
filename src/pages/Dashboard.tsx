@@ -52,7 +52,7 @@ const Dashboard = () => {
             Übersicht aller erstellten Rechnungen
           </p>
         </div>
-        <Link to="/nova-faktura">
+        <Link to="/new-invoice">
           <Button className="gap-2">
             <Plus className="w-4 h-4" /> Neue Rechnung
           </Button>
@@ -105,7 +105,7 @@ const Dashboard = () => {
               <p className="text-muted-foreground">
                 Keine Rechnungen vorhanden
               </p>
-              <Link to="/nova-faktura">
+              <Link to="/new-invoice">
                 <Button variant="outline" className="mt-3 gap-2">
                   <Plus className="w-4 h-4" /> Erste Rechnung erstellen
                 </Button>
@@ -140,7 +140,7 @@ const Dashboard = () => {
                       {Number(invoice.total).toFixed(2)} €
                     </TableCell>
                     <TableCell>
-                      <Link to={`/faktura/${invoice.id}`}>
+                      <Link to={`/invoice/${invoice.id}`}>
                         <Button variant="ghost" size="icon">
                           <Eye className="w-4 h-4" />
                         </Button>

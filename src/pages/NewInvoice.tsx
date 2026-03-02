@@ -177,16 +177,12 @@ const NewInvoice = () => {
       if (itemsError) throw itemsError;
 
       toast.success(`Rechnung ${invoiceNumber} gespeichert`);
-      navigate("/");
+      navigate(`/invoice/${invoice.id}`);
     } catch (error: any) {
       toast.error("Fehler beim Speichern der Rechnung");
     } finally {
       setSaving(false);
     }
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   return (
@@ -199,9 +195,6 @@ const NewInvoice = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={handlePrint} className="gap-2">
-            <Printer className="w-4 h-4" /> Drucken
-          </Button>
           <Button onClick={handleSave} disabled={saving} className="gap-2">
             <Save className="w-4 h-4" /> {saving ? "Speichern..." : "Speichern"}
           </Button>
