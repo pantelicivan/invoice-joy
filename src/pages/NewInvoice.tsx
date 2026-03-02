@@ -56,7 +56,7 @@ const NewInvoice = () => {
   const [customerAddress, setCustomerAddress] = useState("");
   const [carRegistration, setCarRegistration] = useState("");
   const [invoiceDate, setInvoiceDate] = useState(
-    format(new Date(), "yyyy-MM-dd"),
+    new Date().toISOString().split("T")[0],
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -253,7 +253,7 @@ const NewInvoice = () => {
               <div className="text-right">
                 <h3 className="text-lg font-semibold text-primary">RECHNUNG</h3>
                 <p className="text-muted-foreground text-sm mt-1">
-                  Datum: {invoiceDate}
+                  Datum: {format(new Date(invoiceDate), "dd.MM.yyyy")}
                 </p>
               </div>
             </div>
@@ -266,7 +266,7 @@ const NewInvoice = () => {
             <h3 className="text-sm font-medium text-muted-foreground mb-3">
               KUNDENDATEN
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
               <div className="space-y-2">
                 <Label>Kundenname</Label>
                 <Input
@@ -288,7 +288,7 @@ const NewInvoice = () => {
                 <Input
                   value={carRegistration}
                   onChange={(e) => setCarRegistration(e.target.value)}
-                  placeholder="M-AB 1234"
+                  placeholder="GPUB1000"
                 />
               </div>
               <div className="space-y-2">
@@ -315,13 +315,11 @@ const NewInvoice = () => {
                 className="pl-9"
                 placeholder="Leistungen nach Name suchen..."
                 value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setShowSearch(true);
-                }}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSearch(true)}
+                onBlur={() => setTimeout(() => setShowSearch(false), 150)}
               />
-              {showSearch && searchQuery && (
+              {showSearch && (
                 <div className="absolute z-10 w-full mt-1 bg-card border rounded-lg shadow-lg max-h-60 overflow-y-auto">
                   {filteredServices.length === 0 ? (
                     <div className="p-3 text-sm text-muted-foreground">
@@ -332,7 +330,11 @@ const NewInvoice = () => {
                       <button
                         key={service.id}
                         className="w-full text-left px-4 py-3 hover:bg-secondary transition-colors flex items-center justify-between border-b last:border-b-0"
-                        onClick={() => addItem(service)}>
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => {
+                          addItem(service);
+                          setShowSearch(false);
+                        }}>
                         <div>
                           <span className="font-medium">{service.name}</span>
                           <span className="text-muted-foreground text-sm ml-2">
@@ -380,14 +382,14 @@ const NewInvoice = () => {
                       <TableCell>
                         <Input
                           type="number"
-                          min="0.01"
-                          step="0.01"
+                          min="0"
+                          step="1"
                           value={item.quantity}
                           onChange={(e) =>
                             updateItem(
                               index,
                               "quantity",
-                              parseFloat(e.target.value) || 0,
+                              parseInt(e.target.value) || 1,
                             )
                           }
                           className="w-24"
@@ -396,14 +398,14 @@ const NewInvoice = () => {
                       <TableCell>
                         <Input
                           type="number"
-                          min="0"
-                          step="0.01"
+                          min="1"
+                          step="1"
                           value={item.price}
                           onChange={(e) =>
                             updateItem(
                               index,
                               "price",
-                              parseFloat(e.target.value) || 0,
+                              parseInt(e.target.value) || 1,
                             )
                           }
                           className="w-32"
