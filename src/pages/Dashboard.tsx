@@ -39,12 +39,12 @@ const Dashboard = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold">Fakture</h1>
-          <p className="text-muted-foreground text-sm mt-1">Pregled svih kreiranih faktura</p>
+          <h1 className="text-2xl font-semibold">Rechnungen</h1>
+          <p className="text-muted-foreground text-sm mt-1">Übersicht aller erstellten Rechnungen</p>
         </div>
         <Link to="/nova-faktura">
           <Button className="gap-2">
-            <Plus className="w-4 h-4" /> Nova faktura
+            <Plus className="w-4 h-4" /> Neue Rechnung
           </Button>
         </Link>
       </div>
@@ -52,21 +52,21 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="invoice-shadow">
           <CardContent className="p-5">
-            <p className="text-sm text-muted-foreground">Ukupno faktura</p>
+            <p className="text-sm text-muted-foreground">Rechnungen gesamt</p>
             <p className="text-2xl font-semibold mt-1">{invoices.length}</p>
           </CardContent>
         </Card>
         <Card className="invoice-shadow">
           <CardContent className="p-5">
-            <p className="text-sm text-muted-foreground">Ukupan promet</p>
+            <p className="text-sm text-muted-foreground">Gesamtumsatz</p>
             <p className="text-2xl font-semibold mt-1 font-mono">
-              {invoices.reduce((s, i) => s + Number(i.total), 0).toFixed(2)} RSD
+              {invoices.reduce((s, i) => s + Number(i.total), 0).toFixed(2)} €
             </p>
           </CardContent>
         </Card>
         <Card className="invoice-shadow">
           <CardContent className="p-5">
-            <p className="text-sm text-muted-foreground">Ovog meseca</p>
+            <p className="text-sm text-muted-foreground">Diesen Monat</p>
             <p className="text-2xl font-semibold mt-1">
               {invoices.filter((i) => {
                 const d = new Date(i.invoice_date);
@@ -81,14 +81,14 @@ const Dashboard = () => {
       <Card className="invoice-shadow">
         <CardContent className="p-0">
           {loading ? (
-            <div className="p-8 text-center text-muted-foreground">Učitavanje...</div>
+            <div className="p-8 text-center text-muted-foreground">Laden...</div>
           ) : invoices.length === 0 ? (
             <div className="p-8 text-center">
               <FileText className="w-12 h-12 mx-auto text-muted-foreground/40 mb-3" />
-              <p className="text-muted-foreground">Nemate kreiranh faktura</p>
+              <p className="text-muted-foreground">Keine Rechnungen vorhanden</p>
               <Link to="/nova-faktura">
                 <Button variant="outline" className="mt-3 gap-2">
-                  <Plus className="w-4 h-4" /> Kreiraj prvu fakturu
+                  <Plus className="w-4 h-4" /> Erste Rechnung erstellen
                 </Button>
               </Link>
             </div>
@@ -96,11 +96,11 @@ const Dashboard = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Broj</TableHead>
-                  <TableHead>Kupac</TableHead>
-                  <TableHead>Reg. oznaka</TableHead>
+                  <TableHead>Nr.</TableHead>
+                  <TableHead>Kunde</TableHead>
+                  <TableHead>Kennzeichen</TableHead>
                   <TableHead>Datum</TableHead>
-                  <TableHead className="text-right">Ukupno</TableHead>
+                  <TableHead className="text-right">Gesamt</TableHead>
                   <TableHead className="w-16"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -111,7 +111,7 @@ const Dashboard = () => {
                     <TableCell>{invoice.customer_name}</TableCell>
                     <TableCell className="font-mono text-sm">{invoice.car_registration}</TableCell>
                     <TableCell>{format(new Date(invoice.invoice_date), "dd.MM.yyyy")}</TableCell>
-                    <TableCell className="text-right font-mono font-medium">{Number(invoice.total).toFixed(2)} RSD</TableCell>
+                    <TableCell className="text-right font-mono font-medium">{Number(invoice.total).toFixed(2)} €</TableCell>
                     <TableCell>
                       <Link to={`/faktura/${invoice.id}`}>
                         <Button variant="ghost" size="icon">

@@ -50,55 +50,55 @@ const CompanySettings = () => {
       .update(form)
       .eq("user_id", user!.id);
     if (error) {
-      toast.error("Greška pri čuvanju");
+      toast.error("Fehler beim Speichern");
     } else {
-      toast.success("Podešavanja su sačuvana");
+      toast.success("Einstellungen gespeichert");
     }
     setSaving(false);
   };
 
-  if (loading) return <div className="p-8 text-center text-muted-foreground">Učitavanje...</div>;
+  if (loading) return <div className="p-8 text-center text-muted-foreground">Laden...</div>;
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold">Podešavanja firme</h1>
-        <p className="text-muted-foreground text-sm mt-1">Ovi podaci će se prikazivati na fakturama</p>
+        <h1 className="text-2xl font-semibold">Firmeneinstellungen</h1>
+        <p className="text-muted-foreground text-sm mt-1">Diese Daten werden auf den Rechnungen angezeigt</p>
       </div>
 
       <Card className="invoice-shadow max-w-2xl">
         <CardContent className="p-6 space-y-4">
           <div className="space-y-2">
-            <Label>Naziv firme</Label>
-            <Input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} placeholder="Vaša firma d.o.o." />
+            <Label>Firmenname</Label>
+            <Input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} placeholder="Ihre Firma GmbH" />
           </div>
           <div className="space-y-2">
-            <Label>Adresa</Label>
-            <Input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Ulica i broj, Grad" />
+            <Label>Adresse</Label>
+            <Input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Straße Nr., Stadt" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Telefon</Label>
-              <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+381..." />
+              <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+49..." />
             </div>
             <div className="space-y-2">
-              <Label>Email</Label>
+              <Label>E-Mail</Label>
               <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="firma@email.com" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>PIB</Label>
-              <Input value={form.pib} onChange={(e) => setForm({ ...form, pib: e.target.value })} placeholder="123456789" />
+              <Label>USt-IdNr.</Label>
+              <Input value={form.pib} onChange={(e) => setForm({ ...form, pib: e.target.value })} placeholder="DE123456789" />
             </div>
             <div className="space-y-2">
-              <Label>Matični broj</Label>
-              <Input value={form.maticni_broj} onChange={(e) => setForm({ ...form, maticni_broj: e.target.value })} placeholder="12345678" />
+              <Label>Handelsregister (HRB)</Label>
+              <Input value={form.maticni_broj} onChange={(e) => setForm({ ...form, maticni_broj: e.target.value })} placeholder="HRB 12345" />
             </div>
           </div>
           <Button onClick={handleSave} disabled={saving} className="gap-2">
             <Save className="w-4 h-4" />
-            {saving ? "Čuvanje..." : "Sačuvaj podešavanja"}
+            {saving ? "Speichern..." : "Einstellungen speichern"}
           </Button>
         </CardContent>
       </Card>

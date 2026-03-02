@@ -32,15 +32,15 @@ const InvoiceView = () => {
     fetchData();
   }, [id, user]);
 
-  if (loading) return <div className="p-8 text-center text-muted-foreground">Učitavanje...</div>;
-  if (!invoice) return <div className="p-8 text-center text-muted-foreground">Faktura nije pronađena</div>;
+  if (loading) return <div className="p-8 text-center text-muted-foreground">Laden...</div>;
+  if (!invoice) return <div className="p-8 text-center text-muted-foreground">Rechnung nicht gefunden</div>;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between no-print">
-        <h1 className="text-2xl font-semibold">Faktura {invoice.invoice_number}</h1>
+        <h1 className="text-2xl font-semibold">Rechnung {invoice.invoice_number}</h1>
         <Button onClick={() => window.print()} className="gap-2">
-          <Printer className="w-4 h-4" /> Štampaj
+          <Printer className="w-4 h-4" /> Drucken
         </Button>
       </div>
 
@@ -54,32 +54,32 @@ const InvoiceView = () => {
                 {company?.address && <p className="text-muted-foreground text-sm mt-1">{company.address}</p>}
                 {company?.phone && <p className="text-muted-foreground text-sm">{company.phone}</p>}
                 {company?.email && <p className="text-muted-foreground text-sm">{company.email}</p>}
-                {company?.pib && <p className="text-muted-foreground text-sm">PIB: {company.pib}</p>}
-                {company?.maticni_broj && <p className="text-muted-foreground text-sm">MB: {company.maticni_broj}</p>}
+                {company?.pib && <p className="text-muted-foreground text-sm">USt-IdNr.: {company.pib}</p>}
+                {company?.maticni_broj && <p className="text-muted-foreground text-sm">HRB: {company.maticni_broj}</p>}
               </div>
             </div>
             <div className="text-right">
-              <h3 className="text-lg font-semibold text-primary">FAKTURA</h3>
+              <h3 className="text-lg font-semibold text-primary">RECHNUNG</h3>
               <p className="text-muted-foreground text-sm mt-1">{invoice.invoice_number}</p>
               <p className="text-muted-foreground text-sm">Datum: {format(new Date(invoice.invoice_date), "dd.MM.yyyy")}</p>
             </div>
           </div>
 
           <div className="bg-secondary/50 rounded-lg p-4 mb-6">
-            <h4 className="text-sm font-medium text-muted-foreground mb-1">KUPAC</h4>
+            <h4 className="text-sm font-medium text-muted-foreground mb-1">KUNDE</h4>
             <p className="font-medium">{invoice.customer_name}</p>
-            {invoice.car_registration && <p className="text-sm text-muted-foreground">Reg. oznaka: {invoice.car_registration}</p>}
+            {invoice.car_registration && <p className="text-sm text-muted-foreground">Kennzeichen: {invoice.car_registration}</p>}
           </div>
 
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>R.br.</TableHead>
-                <TableHead>Usluga</TableHead>
-                <TableHead className="text-center">Količina</TableHead>
-                <TableHead>Jedinica</TableHead>
-                <TableHead className="text-right">Cena</TableHead>
-                <TableHead className="text-right">Ukupno</TableHead>
+                <TableHead>Pos.</TableHead>
+                <TableHead>Leistung</TableHead>
+                <TableHead className="text-center">Menge</TableHead>
+                <TableHead>Einheit</TableHead>
+                <TableHead className="text-right">Preis</TableHead>
+                <TableHead className="text-right">Gesamt</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -98,8 +98,8 @@ const InvoiceView = () => {
 
           <div className="border-t mt-4 pt-4 flex justify-end">
             <div className="text-right">
-              <span className="text-muted-foreground mr-4">UKUPNO:</span>
-              <span className="text-2xl font-semibold font-mono">{Number(invoice.total).toFixed(2)} RSD</span>
+              <span className="text-muted-foreground mr-4">GESAMT:</span>
+              <span className="text-2xl font-semibold font-mono">{Number(invoice.total).toFixed(2)} €</span>
             </div>
           </div>
         </CardContent>
