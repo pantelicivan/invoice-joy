@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 import jakiLogo from "@/assets/jaki-logo.jpg";
 
 const navItems = [
-  { to: "/", label: "Fakture", icon: LayoutDashboard },
-  { to: "/nova-faktura", label: "Nova faktura", icon: Plus },
-  { to: "/usluge", label: "Usluge", icon: FileText },
-  { to: "/podesavanja", label: "Podešavanja", icon: Settings },
+  { to: "/", label: "Rechnungen", icon: LayoutDashboard },
+  { to: "/nova-faktura", label: "Neue Rechnung", icon: Plus },
+  { to: "/usluge", label: "Leistungen", icon: FileText },
+  { to: "/podesavanja", label: "Einstellungen", icon: Settings },
 ];
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -44,7 +44,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
             <Button variant="ghost" size="sm" onClick={signOut} className="gap-2 text-muted-foreground">
               <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Odjavi se</span>
+              <span className="hidden sm:inline">Abmelden</span>
             </Button>
           </div>
         </div>

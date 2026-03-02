@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { toast } from "sonner";
 import { Save, Printer, Plus, Trash2, Search } from "lucide-react";
 import { format } from "date-fns";
+import jakiLogo from "@/assets/jaki-logo.jpg";
 
 interface Service {
   id: string;
@@ -70,7 +71,7 @@ const NewInvoice = () => {
   const addItem = (service: Service) => {
     const exists = items.find((i) => i.service_id === service.id);
     if (exists) {
-      toast.info("Usluga je već dodata");
+      toast.info("Leistung bereits hinzugefügt");
       return;
     }
     setItems([
@@ -103,23 +104,22 @@ const NewInvoice = () => {
 
   const handleSave = async () => {
     if (!customerName.trim()) {
-      toast.error("Unesite ime kupca");
+      toast.error("Bitte Kundenname eingeben");
       return;
     }
     if (items.length === 0) {
-      toast.error("Dodajte bar jednu uslugu");
+      toast.error("Bitte mindestens eine Leistung hinzufügen");
       return;
     }
 
     setSaving(true);
     try {
-      // Generate invoice number
       const { count } = await supabase
         .from("invoices")
         .select("*", { count: "exact", head: true })
         .eq("user_id", user!.id);
 
-      const invoiceNumber = `FA-${String((count || 0) + 1).padStart(4, "0")}`;
+      const invoiceNumber = `RE-${String((count || 0) + 1).padStart(4, "0")}`;
 
       const { data: invoice, error: invoiceError } = await supabase
         .from("invoices")
@@ -149,10 +149,10 @@ const NewInvoice = () => {
       const { error: itemsError } = await supabase.from("invoice_items").insert(invoiceItems);
       if (itemsError) throw itemsError;
 
-      toast.success(`Faktura ${invoiceNumber} je sačuvana`);
+      toast.success(`Rechnung ${invoiceNumber} gespeichert`);
       navigate("/");
     } catch (error: any) {
-      toast.error("Greška pri čuvanju fakture");
+      toast.error("Fehler beim Speichern der Rechnung");
     } finally {
       setSaving(false);
     }
@@ -166,15 +166,15 @@ const NewInvoice = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between no-print">
         <div>
-          <h1 className="text-2xl font-semibold">Nova faktura</h1>
-          <p className="text-muted-foreground text-sm mt-1">Kreirajte novu fakturu</p>
+          <h1 className="text-2xl font-semibold">Neue Rechnung</h1>
+          <p className="text-muted-foreground text-sm mt-1">Erstellen Sie eine neue Rechnung</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={handlePrint} className="gap-2">
-            <Printer className="w-4 h-4" /> Štampaj
+            <Printer className="w-4 h-4" /> Drucken
           </Button>
           <Button onClick={handleSave} disabled={saving} className="gap-2">
-            <Save className="w-4 h-4" /> {saving ? "Čuvanje..." : "Sačuvaj"}
+            <Save className="w-4 h-4" /> {saving ? "Speichern..." : "Speichern"}
           </Button>
         </div>
       </div>
@@ -184,16 +184,19 @@ const NewInvoice = () => {
         <Card className="invoice-shadow">
           <CardContent className="p-6">
             <div className="flex justify-between items-start">
-              <div>
-                <h2 className="text-xl font-semibold">{company?.company_name || "Vaša firma"}</h2>
-                {company?.address && <p className="text-muted-foreground text-sm mt-1">{company.address}</p>}
-                {company?.phone && <p className="text-muted-foreground text-sm">{company.phone}</p>}
-                {company?.email && <p className="text-muted-foreground text-sm">{company.email}</p>}
-                {company?.pib && <p className="text-muted-foreground text-sm">PIB: {company.pib}</p>}
-                {company?.maticni_broj && <p className="text-muted-foreground text-sm">MB: {company.maticni_broj}</p>}
+              <div className="flex items-start gap-4">
+                <img src={jakiLogo} alt="Jaki Reifenservice" className="h-16 rounded" />
+                <div>
+                  <h2 className="text-xl font-semibold">{company?.company_name || "Jaki Reifenservice"}</h2>
+                  {company?.address && <p className="text-muted-foreground text-sm mt-1">{company.address}</p>}
+                  {company?.phone && <p className="text-muted-foreground text-sm">{company.phone}</p>}
+                  {company?.email && <p className="text-muted-foreground text-sm">{company.email}</p>}
+                  {company?.pib && <p className="text-muted-foreground text-sm">USt-IdNr.: {company.pib}</p>}
+                  {company?.maticni_broj && <p className="text-muted-foreground text-sm">HRB: {company.maticni_broj}</p>}
+                </div>
               </div>
               <div className="text-right">
-                <h3 className="text-lg font-semibold text-primary">FAKTURA</h3>
+                <h3 className="text-lg font-semibold text-primary">RECHNUNG</h3>
                 <p className="text-muted-foreground text-sm mt-1">Datum: {invoiceDate}</p>
               </div>
             </div>
@@ -203,18 +206,18 @@ const NewInvoice = () => {
         {/* Customer Info */}
         <Card className="invoice-shadow mt-4">
           <CardContent className="p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-3">PODACI KUPCA</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">KUNDENDATEN</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label>Ime kupca</Label>
-                <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Ime i prezime / Firma" />
+                <Label>Kundenname</Label>
+                <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Name / Firma" />
               </div>
               <div className="space-y-2">
-                <Label>Registarska oznaka</Label>
-                <Input value={carRegistration} onChange={(e) => setCarRegistration(e.target.value)} placeholder="BG-1234-AA" />
+                <Label>Kennzeichen</Label>
+                <Input value={carRegistration} onChange={(e) => setCarRegistration(e.target.value)} placeholder="M-AB 1234" />
               </div>
               <div className="space-y-2">
-                <Label>Datum fakture</Label>
+                <Label>Rechnungsdatum</Label>
                 <Input type="date" value={invoiceDate} onChange={(e) => setInvoiceDate(e.target.value)} />
               </div>
             </div>
@@ -224,12 +227,12 @@ const NewInvoice = () => {
         {/* Service Search */}
         <Card className="invoice-shadow mt-4 no-print">
           <CardContent className="p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-3">DODAJ USLUGU</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">LEISTUNG HINZUFÜGEN</h3>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 className="pl-9"
-                placeholder="Pretražite usluge po nazivu..."
+                placeholder="Leistungen nach Name suchen..."
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -240,7 +243,7 @@ const NewInvoice = () => {
               {showSearch && searchQuery && (
                 <div className="absolute z-10 w-full mt-1 bg-card border rounded-lg shadow-lg max-h-60 overflow-y-auto">
                   {filteredServices.length === 0 ? (
-                    <div className="p-3 text-sm text-muted-foreground">Nema rezultata</div>
+                    <div className="p-3 text-sm text-muted-foreground">Keine Ergebnisse</div>
                   ) : (
                     filteredServices.map((service) => (
                       <button
@@ -253,7 +256,7 @@ const NewInvoice = () => {
                           <span className="text-muted-foreground text-sm ml-2">({service.unit})</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-mono">{service.price.toFixed(2)} RSD</span>
+                          <span className="text-sm font-mono">{service.price.toFixed(2)} €</span>
                           <Plus className="w-4 h-4 text-primary" />
                         </div>
                       </button>
@@ -270,17 +273,17 @@ const NewInvoice = () => {
           <CardContent className="p-0">
             {items.length === 0 ? (
               <div className="p-8 text-center text-muted-foreground">
-                Pretražite i dodajte usluge iznad
+                Suchen und fügen Sie oben Leistungen hinzu
               </div>
             ) : (
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Usluga</TableHead>
-                    <TableHead className="w-28">Količina</TableHead>
-                    <TableHead className="w-36">Cena</TableHead>
-                    <TableHead className="w-24">Jedinica</TableHead>
-                    <TableHead className="w-36 text-right">Ukupno</TableHead>
+                    <TableHead>Leistung</TableHead>
+                    <TableHead className="w-28">Menge</TableHead>
+                    <TableHead className="w-36">Preis</TableHead>
+                    <TableHead className="w-24">Einheit</TableHead>
+                    <TableHead className="w-36 text-right">Gesamt</TableHead>
                     <TableHead className="w-12 no-print"></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -310,7 +313,7 @@ const NewInvoice = () => {
                       </TableCell>
                       <TableCell>{item.unit}</TableCell>
                       <TableCell className="text-right font-mono font-medium">
-                        {item.total.toFixed(2)} RSD
+                        {item.total.toFixed(2)} €
                       </TableCell>
                       <TableCell className="no-print">
                         <Button variant="ghost" size="icon" onClick={() => removeItem(index)} className="text-destructive">
@@ -325,8 +328,8 @@ const NewInvoice = () => {
             {items.length > 0 && (
               <div className="border-t p-4 flex justify-end">
                 <div className="text-right">
-                  <span className="text-muted-foreground text-sm mr-4">UKUPNO:</span>
-                  <span className="text-xl font-semibold font-mono">{grandTotal.toFixed(2)} RSD</span>
+                  <span className="text-muted-foreground text-sm mr-4">GESAMT:</span>
+                  <span className="text-xl font-semibold font-mono">{grandTotal.toFixed(2)} €</span>
                 </div>
               </div>
             )}
