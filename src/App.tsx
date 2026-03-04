@@ -11,6 +11,7 @@ import Services from "@/pages/Services";
 import NewInvoice from "@/pages/NewInvoice";
 import InvoiceView from "@/pages/InvoiceView";
 import CompanySettings from "@/pages/CompanySettings";
+import LandingPage from "@/pages/LandingPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,7 +22,7 @@ const ProtectedRoutes = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-muted-foreground">Učitavanje...</div>
+        <div className="text-muted-foreground">Laden...</div>
       </div>
     );
   }
@@ -45,7 +46,7 @@ const ProtectedRoutes = () => {
 const AuthRoute = () => {
   const { session, loading } = useAuth();
   if (loading) return null;
-  if (session) return <Navigate to="/" replace />;
+  if (session) return <Navigate to="/app" replace />;
   return <Auth />;
 };
 
@@ -56,8 +57,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/auth" element={<AuthRoute />} />
-          <Route path="/*" element={<ProtectedRoutes />} />
+          <Route path="/app/*" element={<ProtectedRoutes />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
