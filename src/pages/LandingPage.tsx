@@ -30,11 +30,6 @@ const services = [
     title: "Reifenreparatur",
     desc: "Schnelle Reparatur bei Reifenpannen – damit Sie sicher weiterfahren.",
   },
-  {
-    icon: Star,
-    title: "Reifenlagerung",
-    desc: "Sichere Einlagerung Ihrer Reifen in optimalen Bedingungen.",
-  },
 ];
 
 const LandingPage = () => {
@@ -118,23 +113,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="bg-card border-y border-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {[
-            { value: "10+", label: "Jahre Erfahrung" },
-            { value: "5000+", label: "Zufriedene Kunden" },
-            { value: "100%", label: "Einsatz" },
-            { value: "Fair", label: "Preise" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl font-bold text-primary">{stat.value}</p>
-              <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Services */}
       <section id="leistungen" className="py-20 sm:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -150,7 +128,7 @@ const LandingPage = () => {
               wir kümmern uns um alles rund um Ihre Reifen.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s) => (
               <Card
                 key={s.title}
@@ -185,8 +163,7 @@ const LandingPage = () => {
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Jaki Reifenservice steht für Qualität, Zuverlässigkeit und faire
-                Preise. Mit über 10 Jahren Erfahrung in der Branche bieten wir
-                Ihnen erstklassigen Service für alle Reifenarbeiten.
+                Preise.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 Egal ob PKW, SUV oder Transporter – bei uns ist Ihr Fahrzeug in
@@ -229,7 +206,7 @@ const LandingPage = () => {
               So erreichen Sie uns
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             <Card className="invoice-shadow-lg text-center">
               <CardContent className="p-6">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
@@ -239,7 +216,7 @@ const LandingPage = () => {
                 <a
                   href="tel:+4917612345678"
                   className="text-muted-foreground text-sm hover:text-accent transition-colors">
-                  +49 176 1234 5678
+                  +49 176 367 585 20
                 </a>
               </CardContent>
             </Card>
@@ -250,12 +227,13 @@ const LandingPage = () => {
                 </div>
                 <h3 className="font-semibold mb-1">Adresse</h3>
                 <p className="text-muted-foreground text-sm">
-                  Musterstraße 1<br />
-                  12345 Stadt
+                  Daimlerstr. 19
+                  <br />
+                  73117 Wangen
                 </p>
               </CardContent>
             </Card>
-            <Card className="invoice-shadow-lg text-center">
+            {/* <Card className="invoice-shadow-lg text-center">
               <CardContent className="p-6">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
                   <Clock className="w-5 h-5 text-accent" />
@@ -267,7 +245,7 @@ const LandingPage = () => {
                   Sa: 9:00–14:00
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </section>
