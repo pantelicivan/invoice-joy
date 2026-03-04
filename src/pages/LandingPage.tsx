@@ -32,8 +32,17 @@ const services = [
     title: "Reifenreparatur",
     desc: "Schnelle Reparatur bei Reifenpannen – damit Sie sicher weiterfahren.",
   },
+  {
+    icon: Wrench,
+    title: "KFZ-Service",
+    desc: "Allgemeiner KFZ-Service und Wartung für alle Fahrzeugmarken.",
+  },
+  {
+    icon: Zap,
+    title: "Pannendienst (Reifenpanne & Batterie)",
+    desc: "Schnelle Hilfe bei Reifenpannen oder Batterieproblemen – wir sind für Sie da.",
+  },
 ];
-
 const LandingPage = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
