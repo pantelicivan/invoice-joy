@@ -23,14 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-
-interface Service {
-  id: string;
-  name: string;
-  price: number;
-  unit: string;
-  description: string;
-}
+import { Service } from "../lib/interfaces";
 
 const Services = () => {
   const { user } = useAuth();

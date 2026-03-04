@@ -15,35 +15,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Save, Printer, Plus, Trash2, Search } from "lucide-react";
+import { Save, Plus, Trash2, Search } from "lucide-react";
 import { format } from "date-fns";
 import jakiLogo from "@/assets/jaki-logo.jpg";
-
-interface Service {
-  id: string;
-  name: string;
-  price: number;
-  unit: string;
-  description: string;
-}
-
-interface InvoiceItem {
-  service_id: string;
-  name: string;
-  quantity: number;
-  price: number;
-  unit: string;
-  total: number;
-}
-
-interface CompanyProfile {
-  company_name: string;
-  address: string;
-  phone: string;
-  email: string;
-  bank: string;
-  iban: string;
-}
+import { CompanyProfile, InvoiceItem, Service } from "../lib/interfaces";
 
 const NewInvoice = () => {
   const { user } = useAuth();
@@ -178,7 +153,7 @@ const NewInvoice = () => {
 
       toast.success(`Rechnung ${invoiceNumber} gespeichert`);
       navigate(`/invoice/${invoice.id}`);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error("Fehler beim Speichern der Rechnung");
     } finally {
       setSaving(false);

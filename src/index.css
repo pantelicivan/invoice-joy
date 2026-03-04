@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -96,21 +96,30 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: "DM Sans", system-ui, sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'DM Sans', system-ui, sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "DM Sans", system-ui, sans-serif;
     @apply font-semibold tracking-tight;
   }
 }
 
 @layer utilities {
   .invoice-shadow {
-    box-shadow: 0 1px 3px 0 hsl(220 30% 12% / 0.06), 0 1px 2px -1px hsl(220 30% 12% / 0.06);
+    box-shadow:
+      0 1px 3px 0 hsl(220 30% 12% / 0.06),
+      0 1px 2px -1px hsl(220 30% 12% / 0.06);
   }
   .invoice-shadow-lg {
-    box-shadow: 0 10px 15px -3px hsl(220 30% 12% / 0.08), 0 4px 6px -4px hsl(220 30% 12% / 0.04);
+    box-shadow:
+      0 10px 15px -3px hsl(220 30% 12% / 0.08),
+      0 4px 6px -4px hsl(220 30% 12% / 0.04);
   }
 }
 

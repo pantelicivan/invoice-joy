@@ -14,17 +14,7 @@ import {
 } from "@/components/ui/table";
 import { Plus, FileText, Eye } from "lucide-react";
 import { format } from "date-fns";
-
-interface Invoice {
-  id: string;
-  invoice_number: string;
-  customer_name: string;
-  customer_address: string;
-  car_registration: string;
-  invoice_date: string;
-  total: number;
-  created_at: string;
-}
+import { Invoice } from "../lib/interfaces";
 
 const Dashboard = () => {
   const { user } = useAuth();

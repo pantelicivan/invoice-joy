@@ -15,13 +15,14 @@ import {
 import { Printer } from "lucide-react";
 import { format } from "date-fns";
 import jakiLogo from "@/assets/jaki-logo.jpg";
+import { CompanyProfile, Invoice, InvoiceItem } from "../lib/types";
 
 const InvoiceView = () => {
   const { id } = useParams();
   const { user } = useAuth();
-  const [invoice, setInvoice] = useState<any>(null);
-  const [items, setItems] = useState<any[]>([]);
-  const [company, setCompany] = useState<any>(null);
+  const [invoice, setInvoice] = useState<Invoice | null>(null);
+  const [items, setItems] = useState<InvoiceItem[]>([]);
+  const [company, setCompany] = useState<CompanyProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
