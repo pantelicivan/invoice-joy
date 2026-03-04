@@ -17,23 +17,23 @@ import heroBg from "@/assets/hero-bg.jpg";
 const services = [
   {
     icon: Wrench,
-    title: "Reifenwechsel",
-    desc: "Professioneller Sommer- & Winterreifenwechsel für alle Fahrzeugtypen.",
+    title: "Reifenservice",
+    desc: "Professioneller Sommer- & Winterreifenwechsel, Auswuchten und Reifenreparatur.",
   },
   {
     icon: ShieldCheck,
-    title: "Auswuchten",
-    desc: "Präzises Auswuchten für ruhiges Fahren und gleichmäßigen Reifenverschleiß.",
+    title: "Inspektion & Wartung",
+    desc: "Regelmäßige Inspektionen, Ölwechsel und Wartungsarbeiten für Ihr Fahrzeug.",
   },
   {
     icon: Zap,
-    title: "Reifenreparatur",
-    desc: "Schnelle Reparatur bei Reifenpannen – damit Sie sicher weiterfahren.",
+    title: "Bremsenservice",
+    desc: "Bremsbeläge, Bremsscheiben und komplette Bremsanlagen – sicher unterwegs.",
   },
   {
     icon: Star,
-    title: "Reifenlagerung",
-    desc: "Sichere Einlagerung Ihrer Reifen in optimalen Bedingungen.",
+    title: "Allgemeine Kfz-Reparatur",
+    desc: "Von Auspuff bis Zündkerze – wir reparieren zuverlässig und zu fairen Preisen.",
   },
 ];
 
@@ -78,18 +78,18 @@ const LandingPage = () => {
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-32 sm:py-44">
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 bg-primary/20 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-              <Star className="w-3.5 h-3.5" /> Ihr Reifenprofi in der Region
+              <Star className="w-3.5 h-3.5" /> Ihr Kfz-Profi in der Region
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-primary-foreground leading-[1.1] mb-6">
               Professioneller
               <br />
-              <span className="text-accent">Reifenservice</span>
+              <span className="text-accent">Kfz-Service</span>
               <br />
-              für Ihr Fahrzeug
+              & Reifendienst
             </h1>
             <p className="text-lg text-primary-foreground/80 max-w-md mb-8 leading-relaxed">
-              Schnell, zuverlässig und zu fairen Preisen. Vertrauen Sie auf unsere
-              langjährige Erfahrung im Reifenservice.
+              Von Reifenwechsel bis Kfz-Reparatur – schnell, zuverlässig und zu
+              fairen Preisen. Vertrauen Sie auf unsere Erfahrung.
             </p>
             <div className="flex flex-wrap gap-3">
               <a href="tel:+4917612345678">
@@ -135,8 +135,8 @@ const LandingPage = () => {
               Unsere Leistungen
             </h2>
             <p className="text-muted-foreground mt-3 max-w-lg mx-auto">
-              Vom einfachen Reifenwechsel bis zur professionellen Einlagerung –
-              wir kümmern uns um alles rund um Ihre Reifen.
+              Vom Reifenwechsel über Inspektionen bis zur Kfz-Reparatur –
+              wir kümmern uns um alles rund um Ihr Fahrzeug.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -175,8 +175,8 @@ const LandingPage = () => {
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Jaki Reifenservice steht für Qualität, Zuverlässigkeit und faire Preise.
-                Mit über 10 Jahren Erfahrung in der Branche bieten wir Ihnen erstklassigen
-                Service für alle Reifenarbeiten.
+                Mit über 10 Jahren Erfahrung bieten wir Ihnen erstklassigen
+                Kfz-Service – von Reifen über Bremsen bis hin zu Inspektionen.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 Egal ob PKW, SUV oder Transporter – bei uns ist Ihr Fahrzeug in besten
