@@ -147,7 +147,7 @@ const LandingPage = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="tel:+4917612345678">
+              <a href="tel:+4917636758520">
                 <Button size="lg" className="gap-2 w-full sm:w-auto">
                   <Phone className="w-4 h-4" /> Jetzt anrufen
                 </Button>
@@ -219,7 +219,7 @@ const LandingPage = () => {
                 <Phone className="w-6 h-6 text-accent mx-auto mb-3" />
                 <h3 className="font-semibold mb-1">Telefon</h3>
                 <a
-                  href="tel:+4917612345678"
+                  href="tel:+4917636758520"
                   className="text-muted-foreground text-sm hover:text-accent block py-1">
                   +49 176 367 585 20
                 </a>
