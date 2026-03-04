@@ -152,7 +152,7 @@ const NewInvoice = () => {
       if (itemsError) throw itemsError;
 
       toast.success(`Rechnung ${invoiceNumber} gespeichert`);
-      navigate(`/invoice/${invoice.id}`);
+      navigate(`/app/invoice/${invoice.id}`);
     } catch (error: unknown) {
       toast.error("Fehler beim Speichern der Rechnung");
     } finally {

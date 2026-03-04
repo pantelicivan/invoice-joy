@@ -17,9 +17,11 @@ export type Database = {
       company_profiles: {
         Row: {
           address: string | null
+          bank: string | null
           company_name: string
           created_at: string
           email: string | null
+          iban: string | null
           id: string
           logo_url: string | null
           maticni_broj: string | null
@@ -30,9 +32,11 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          bank?: string | null
           company_name?: string
           created_at?: string
           email?: string | null
+          iban?: string | null
           id?: string
           logo_url?: string | null
           maticni_broj?: string | null
@@ -43,9 +47,11 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          bank?: string | null
           company_name?: string
           created_at?: string
           email?: string | null
+          iban?: string | null
           id?: string
           logo_url?: string | null
           maticni_broj?: string | null
@@ -108,6 +114,7 @@ export type Database = {
         Row: {
           car_registration: string | null
           created_at: string
+          customer_address: string | null
           customer_name: string
           id: string
           invoice_date: string
@@ -119,6 +126,7 @@ export type Database = {
         Insert: {
           car_registration?: string | null
           created_at?: string
+          customer_address?: string | null
           customer_name: string
           id?: string
           invoice_date?: string
@@ -130,6 +138,7 @@ export type Database = {
         Update: {
           car_registration?: string | null
           created_at?: string
+          customer_address?: string | null
           customer_name?: string
           id?: string
           invoice_date?: string

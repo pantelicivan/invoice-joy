@@ -12,10 +12,10 @@ import { cn } from "@/lib/utils";
 import jakiLogo from "@/assets/jaki-logo.jpg";
 
 const navItems = [
-  { to: "/", label: "Rechnungen", icon: LayoutDashboard },
-  { to: "/new-invoice", label: "Neue Rechnung", icon: Plus },
-  { to: "/services", label: "Leistungen", icon: FileText },
-  { to: "/settings", label: "Einstellungen", icon: Settings },
+  { to: "/app", label: "Rechnungen", icon: LayoutDashboard },
+  { to: "/app/new-invoice", label: "Neue Rechnung", icon: Plus },
+  { to: "/app/services", label: "Leistungen", icon: FileText },
+  { to: "/app/settings", label: "Einstellungen", icon: Settings },
 ];
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
